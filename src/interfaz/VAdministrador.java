@@ -722,7 +722,7 @@ public class VAdministrador extends javax.swing.JFrame {
             if (empleado != null) {
                 AreaDeResultados.setText("Ya existe un empleado con ese DNI.");
             } else {
-                gestionAdmin.registrarEmpleado(dni, nombres, apellidos, password, rol, gestionCajero);
+                administrador.registrarEmpleado(dni, nombres, apellidos, password, rol, gestionCajero);
 
                 AreaDeResultados.setText("Empleado registrado correctamente.\n"
                         + "DNI: " + dni + "\n"
@@ -764,33 +764,30 @@ public class VAdministrador extends javax.swing.JFrame {
     private void botonModificarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarEmpleadoActionPerformed
         // TODO add your handling code here:
         String dniTexto = cajaDniEmpleado.getText();
-    String nombres = cajaNombresEmpleado.getText();
-    String apellidos = cajaApellidosEmpleado.getText();
-    String password = cajaPasswordEmpleado.getText();
-    String rol = cajaRolEmpleado.getText();
+        String nombres = cajaNombresEmpleado.getText();
+        String apellidos = cajaApellidosEmpleado.getText();
+        String password = cajaPasswordEmpleado.getText();
+        String rol = cajaRolEmpleado.getText();
 
-    if (dniTexto.equals("")) {
-        AreaDeResultados.setText("Ingrese el DNI del empleado.");
-    } else {
-        int dni = 0;
-
-        for (int i = 0; i < dniTexto.length(); i++) {
-            dni = dni * 10 + (dniTexto.charAt(i) - '0');
-        }
-
-        Empleado empleado = gestionAdmin.buscarEmpleadoPorDni(dni);
-
-        if (empleado == null) {
-            AreaDeResultados.setText("Empleado no encontrado.");
+        if (dniTexto.equals("")) {
+            AreaDeResultados.setText("Ingrese el DNI del empleado.");
         } else {
-            empleado.setNombres(nombres);
-            empleado.setApellidos(apellidos);
-            empleado.setPassword(password);
-            empleado.setRol(rol);
+            int dni = 0;
 
-            AreaDeResultados.setText("Empleado modificado correctamente.");
+            for (int i = 0; i < dniTexto.length(); i++) {
+                dni = dni * 10 + (dniTexto.charAt(i) - '0');
+            }
+
+            Empleado empleado = gestionAdmin.buscarEmpleadoPorDni(dni);
+
+            if (empleado == null) {
+                AreaDeResultados.setText("Empleado no encontrado.");
+            } else {
+                administrador.modificarEmpleado(dni, nombres, apellidos, password, empleado.isActivo());
+
+                AreaDeResultados.setText("Empleado modificado correctamente.");
+            }
         }
-    }
     }//GEN-LAST:event_botonModificarEmpleadoActionPerformed
 
     private void botonEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarEmpleadoActionPerformed
@@ -811,7 +808,7 @@ public class VAdministrador extends javax.swing.JFrame {
             if (empleado == null) {
                 AreaDeResultados.setText("Empleado no encontrado.");
             } else {
-                gestionAdmin.eliminarEmpleado(dni);
+                administrador.eliminarEmpleado(dni);
                 AreaDeResultados.setText("Empleado eliminado correctamente.");
             }
         }
@@ -854,7 +851,7 @@ public class VAdministrador extends javax.swing.JFrame {
                     stock = stock * 10 + (stockTexto.charAt(i) - '0');
                 }
 
-                gestionAdmin.registrarProducto(codigo, nombre, precio, categoria, stock);
+                administrador.registrarProducto(codigo, nombre, precio, categoria, stock);
 
                 AreaDeResultados.setText("Producto registrado correctamente.");
             }
@@ -932,7 +929,7 @@ public class VAdministrador extends javax.swing.JFrame {
                     stock = stock * 10 + (stockTexto.charAt(i) - '0');
                 }
 
-                gestionAdmin.modificarProducto(codigo, nombre, precio, categoria, stock);
+                administrador.modificarProducto(codigo, nombre, precio, categoria, stock);
 
                 AreaDeResultados.setText("Producto modificado correctamente.");
             }
@@ -951,7 +948,7 @@ public class VAdministrador extends javax.swing.JFrame {
             if (producto == null) {
                 AreaDeResultados.setText("Producto no encontrado.");
             } else {
-                gestionAdmin.eliminarProducto(codigo);
+                administrador.eliminarProducto(codigo);
                 AreaDeResultados.setText("Producto eliminado correctamente.");
             }
         }
@@ -977,7 +974,7 @@ public class VAdministrador extends javax.swing.JFrame {
                     precio = precio * 10 + (precioTexto.charAt(i) - '0');
                 }
 
-                gestionAdmin.registrarCombo(codigo, nombre, precio);
+                administrador.registrarCombo(codigo, nombre, precio);
 
                 AreaDeResultados.setText("Combo registrado correctamente.");
             }
@@ -1025,7 +1022,7 @@ public class VAdministrador extends javax.swing.JFrame {
                     precio = precio * 10 + (precioTexto.charAt(i) - '0');
                 }
 
-                gestionAdmin.modificarCombo(codigo, nombre, precio);
+                administrador.modificarCombo(codigo, nombre, precio);
 
                 AreaDeResultados.setText("Combo modificado correctamente.");
             }
@@ -1044,7 +1041,7 @@ public class VAdministrador extends javax.swing.JFrame {
             if (combo == null) {
                 AreaDeResultados.setText("Combo no encontrado.");
             } else {
-                gestionAdmin.eliminarCombo(codigo);
+                administrador.eliminarCombo(codigo);
                 AreaDeResultados.setText("Combo eliminado correctamente.");
             }
         }
@@ -1101,39 +1098,26 @@ public class VAdministrador extends javax.swing.JFrame {
 
     private void botonReporteProductividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReporteProductividadActionPerformed
         // TODO add your handling code here:
-        String texto = "REPORTE DE PRODUCTIVIDAD\n\n";
+        ReporteGerencial reporte = new ReporteGerencial();
 
-        for (int i = 0; i < gestionAdmin.getContadorEmpleados(); i++) {
-            Empleado empleado = gestionAdmin.getListaEmpleados()[i];
-
-            texto = texto + empleado.getNombreCompleto()
-                    + "\nRol: " + empleado.getRol()
-                    + "\nPedidos atendidos: " + empleado.getPedidosAtendidos() 
-                    +"\n---------------------" 
-                    +"\n";
-        }
-
-        AreaDeResultados.setText(texto);
+        AreaDeResultados.setText(
+                reporte.generarReporteProductividad(
+                        gestionAdmin.getListaEmpleados(),
+                        gestionAdmin.getContadorEmpleados()
+                )
+        );
     }//GEN-LAST:event_botonReporteProductividadActionPerformed
 
     private void botonReporteIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReporteIngresosActionPerformed
         // TODO add your handling code here:
-        String texto = "REPORTE DE INGRESOS\n\n";
-        double total = 0;
+        ReporteGerencial reporte = new ReporteGerencial();
 
-        for (int i = 0; i < gestionCajero.getContadorPedidos(); i++) {
-            Pedido pedido = gestionCajero.getListaPedidos()[i];
-
-            texto = texto + "Pedido " + pedido.getNumeroCorrelativo()
-                    + " | Estado: " + pedido.getEstado()
-                    + " | Total: S/" + pedido.calcularTotal() + "\n";
-
-            total = total + pedido.calcularTotal();
-        }
-
-        texto = texto + "\nTOTAL: S/" + total;
-
-        AreaDeResultados.setText(texto);
+        AreaDeResultados.setText(
+                reporte.generarReporteIngresos(
+                        gestionCajero.getListaPedidos(),
+                        gestionCajero.getContadorPedidos()
+                )
+        );
     }//GEN-LAST:event_botonReporteIngresosActionPerformed
 
     private void botonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionActionPerformed
