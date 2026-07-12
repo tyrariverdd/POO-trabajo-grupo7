@@ -29,7 +29,7 @@ public class Producto extends ItemMenu {
 
     @Override
     public String mostrarDatos() {
-        return codigo + " | " + nombre + " | S/" + precio + " | " + categoria + " | Stock: " + stockDisponible;
+        return "\nCódigo:"+codigo + "\nNombre: " + nombre + "\nPrecio: S/" + precio + "\nCategoría: " + categoria + "\nStock: " + stockDisponible;
     }
 
     public String getCodigo() {

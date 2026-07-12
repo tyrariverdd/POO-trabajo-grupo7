@@ -85,7 +85,7 @@ public class GestionCajero {
         return buscarClientePorDocumento(String.valueOf(dni));
     }
 
-    // ======================== PEDIDOS (RF05 Y RF06) ========================
+    //PARTE DE PEDIDOSS
     public Pedido crearPedido(Cajero cajero, String documentoCliente, String tipoEntrega) {
         Cliente cliente = buscarClientePorDocumento(documentoCliente);
         if (cliente != null && cajero != null && contadorPedidos < listaPedidos.length) {

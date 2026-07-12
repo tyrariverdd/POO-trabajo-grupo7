@@ -17,7 +17,7 @@ public class GestionAdmin {
         this.contadorEmpleados = 0;
     }
 
-    // ======================== EMPLEADOS (RF01) ========================
+    //CODIGO DE EMPLEADOS
     public void registrarEmpleado(Empleado empleado) {
         if (empleado != null && contadorEmpleados < listaEmpleados.length) {
             if (buscarEmpleadoPorDni(empleado.getDni()) == null) {
@@ -87,7 +87,7 @@ public class GestionAdmin {
         return null;
     }
 
-    // ======================== PRODUCTOS (RF02) ========================
+    //CODIGO DE PRODUCTOS
     public void registrarProducto(String codigo, String nombre, double precio, String categoria, int stock) {
         if (contadorProductos < listaProductos.length) {
             if (buscarProductoPorCodigo(codigo) == null) {
@@ -143,7 +143,7 @@ public class GestionAdmin {
         return null;
     }
 
-    // ======================== COMBOS (RF04) ========================
+    //CODIGO DE COMBOSS
     public void registrarCombo(String codigo, String nombre, double precioPromocional) {
         if (contadorCombos < listaCombos.length) {
             if (buscarComboPorCodigo(codigo) == null) {

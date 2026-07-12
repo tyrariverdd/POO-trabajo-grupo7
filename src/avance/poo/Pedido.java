@@ -123,8 +123,8 @@ public class Pedido implements Cobrable, ControlEstado, Mostrable {
 
     @Override
     public String mostrarDatos() {
-        return "Pedido #" + numeroCorrelativo + " | " + cliente.getNombreCompleto()
-                + " | " + tipoEntrega + " | " + estado + " | S/" + calcularTotal();
+        return "Pedido #" + numeroCorrelativo + "\nNombre Completo:" + cliente.getNombreCompleto()
+                + "\nTipo Entrega: " + tipoEntrega + "\nEstado: " + estado + " | S/" + calcularTotal();
     }
 
     public String generarDetalleCuenta() {
