@@ -6,15 +6,15 @@ public class ReporteGerencial {
         String reporte = "REPORTE DE PRODUCTIVIDAD\n";
         for (int i = 0; i < contadorEmpleados; i++) {
             Empleado empleado = empleados[i];
-            reporte = reporte + empleado.getDni() + " | " + empleado.getNombreCompleto()
-                    + " | " + empleado.getRol()
-                    + " | Atendidos: " + empleado.getPedidosAtendidos();
+            reporte = reporte + "\nDNI: "+empleado.getDni() + "\nNombre Completo: " + empleado.getNombreCompleto()
+                    + "\nRol: " + empleado.getRol()
+                    + "\nAtendidos: " + empleado.getPedidosAtendidos();
 
             if (empleado instanceof Repartidor) {
                 Repartidor repartidor = (Repartidor) empleado;
-                reporte = reporte + " | Entregas: " + repartidor.getEntregasRealizadas();
+                reporte = reporte + "\nEntregas: " + repartidor.getEntregasRealizadas();
             }
-            reporte = reporte + "\n";
+            reporte = reporte + "\n---------"+"\n";
         }
         return reporte;
     }
