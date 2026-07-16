@@ -23,7 +23,7 @@ public abstract class ItemMenu implements Mostrable {
 
     @Override
     public String mostrarDatos() {
-        return codigo + " | " + nombre + " | S/" + precio + " | " + getTipoItem();
+        return codigo + "\nNombre: " + nombre + "\nPrecio: S/" + precio + "\nTipo item: " + getTipoItem();
     }
 
     public String getCodigo() {
